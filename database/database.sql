@@ -2,6 +2,4 @@ CREATE DATABASE IF NOT EXISTS msgdb;
 
 USE msgdb;
 
-CREATE TABLE IF NOT EXISTS messages (
-  message VARCHAR(255)
-);
+CREATE TABLE IF NOT EXISTS messages (message VARCHAR(255));
