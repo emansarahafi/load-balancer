@@ -1,17 +1,17 @@
 // content of index.js
-const http = require("http");
+const http = require('http');
 const url = require('url');
 const mysql = require("mysql");
 
 const port = 3030;
 
-const message = process.env.MESSAGE || "default msg";
+const message = process.env.MESSAGE || "Hello node"
 
 var con = mysql.createConnection({
   host: process.env.DB_HOST || "no host",
   user: process.env.DB_USER || "no user",
   password: process.env.DB_PASS || "no pass",
-  database: process.env.DB_NAME || "msgdb",
+  database: process.env.DB_NAME || "db",
 });
 
 con.connect(function (err) {
@@ -19,26 +19,8 @@ con.connect(function (err) {
   console.log("Connected!");
 });
 
-con.query("CREATE DATABASE IF NOT EXISTS msgdb", function (err, result) {
-  if (err) throw err;
-  console.log("Database created");
-});
-
-con.query("USE msgdb", function (err, result) {
-  if (err) throw err;
-  console.log("Database selected");
-});
-
-con.query(
-  "CREATE TABLE IF NOT EXISTS messages (message VARCHAR(255))",
-  function (err, result) {
-    if (err) throw err;
-    console.log("Table created");
-  }
-);
-
 const writeMessageHandler = (request, response) => {
-  const queryObject = url.parse(request.url,true); // http:myapp/write?message=Hello-World
+  const queryObject = url.parse(request.url,true); // http://myapp/write?message=Hello-World
   const msg = queryObject.query.message;
   if(!msg) {
     response.writeHead(401, {'Content-Type': 'text/plain'});
@@ -47,8 +29,7 @@ const writeMessageHandler = (request, response) => {
   }
 
   console.log("Message: " + msg);
-  con.query(
-    `INSERT INTO messages (message) VALUES ('${msg}')`,
+  con.query(`INSERT INTO messages (message) VALUES ('${msg}')`,
     function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
@@ -87,8 +68,8 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, (err) => {
-  if (err) {
-    return console.log("something bad happened", err);
+  if (err) { 
+	  return console.log('something bad happened', err); 
   }
   console.log(`server is listening on ${port}`);
 });
