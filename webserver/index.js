@@ -1,13 +1,17 @@
 // content of index.js
 const http = require("http");
 const url = require('url');
-const port = 3030;
-const message = process.env.MESSAGE || "default msg";
 const mysql = require("mysql");
+
+const port = 3030;
+
+const message = process.env.MESSAGE || "default msg";
+
 var con = mysql.createConnection({
   host: process.env.DB_HOST || "no host",
   user: process.env.DB_USER || "no user",
   password: process.env.DB_PASS || "no pass",
+  database: process.env.DB_NAME || "msgdb",
 });
 
 con.connect(function (err) {
@@ -34,7 +38,7 @@ con.query(
 );
 
 const writeMessageHandler = (request, response) => {
-  const queryObject = url.parse(request.url,true);
+  const queryObject = url.parse(request.url,true); // http:myapp/write?message=Hello-World
   const msg = queryObject.query.message;
   if(!msg) {
     response.writeHead(401, {'Content-Type': 'text/plain'});
