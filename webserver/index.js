@@ -30,7 +30,7 @@ con.query("USE msgdb", function (err, result) {
 });
 
 con.query(
-  "CREATE TABLE IF NOT EXISTS messages (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255))",
+  "CREATE TABLE IF NOT EXISTS messages (message VARCHAR(255))",
   function (err, result) {
     if (err) throw err;
     console.log("Table created");
