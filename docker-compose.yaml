@@ -1,8 +1,10 @@
+version: '3'
 services:
   database:
     build: ./database
     environment:
       - MYSQL_ROOT_PASSWORD="database-pass"
+
   web-server-1:
     image: web-server:latest
     environment:
@@ -14,6 +16,7 @@ services:
       - SERVERNUM=1
     depends_on:
       - database
+
   web-server-2:
     image: web-server:latest
     environment:
@@ -25,6 +28,7 @@ services:
       - SERVERNUM=2
     depends_on:
       - database
+
   web-server-3:
     image: web-server:latest
     environment:
@@ -36,6 +40,7 @@ services:
       - SERVERNUM=3
     depends_on:
       - database
+
   nginx:
     build: ./nginx
     ports:
