@@ -19,7 +19,7 @@ con.connect(function (err) {
 });
 
 const writeMessageHandler = (request, response) => {
-  const queryObject = url.parse(request.url,true); // http://myapp/write?message=Hello-World
+  const queryObject = url.parse(request.url,true); // http://mywebapp/write?message=Hello-World
   const msg = queryObject.query.message;
   if(!msg) {
     response.writeHead(401, {'Content-Type': 'text/plain'});
