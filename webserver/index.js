@@ -1,4 +1,3 @@
-// content of index.js
 const http = require('http');
 const url = require('url');
 const mysql = require("mysql");
